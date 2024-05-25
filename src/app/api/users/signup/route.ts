@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
     console.log('reqbody', reqBody);
 
     const user = await User.findOne({ email });
+    console.log('user', user); 
     if (user) {
       return NextResponse.json(
         { error: 'user already exists' },
@@ -38,6 +39,7 @@ export async function POST(request: NextRequest) {
       emailType: 'VERIFY',
       userId: savedUser._id
     });
+    console.log('email sent', eamilsent);
 
     return NextResponse.json({
       message: 'User created successfully',

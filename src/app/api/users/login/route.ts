@@ -9,18 +9,20 @@ connectToDb();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { email, pasword } = reqBody;
+    const { email, password } = reqBody;
     console.log('reqbody', reqBody);
 
     const user = await User.findOne({ email });
+    console.log('user exists', user);
     if (!user) {
       return NextResponse.json(
-        { error: 'Invalid email or password and user not found' },
+        { error: 'Invalid email  user not found' },
         { status: 400 }
       );
     }
     console.log('user exists', user);
-    const validPassword = await bcryptjs.compare(pasword, user.password);
+    const validPassword = await bcryptjs.compare(password, user.password);
+    console.log('valid password', validPassword);
     if (!validPassword) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
